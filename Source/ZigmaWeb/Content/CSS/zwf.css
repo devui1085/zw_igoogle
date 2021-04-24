@@ -1,0 +1,58 @@
+﻿.panel {
+    position: absolute;
+    border: 1px solid #480a3f;
+    box-sizing: border-box;
+    overflow:hidden;
+}
+
+.panel-selected{
+    border: 1px solid red;
+    box-shadow: 0 0 8px 3px #ffd800;
+}
+
+/* Cover element (<div>) inside panels */
+.cover {
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    opacity:0.5;
+    background-color:white;
+    display:none;
+}
+
+#resize-box {
+    position:absolute;
+    right:16px;
+    top:17px;
+    width:64px;
+    height:64px;
+}
+
+.btn-resize {
+    position:absolute;
+    width: 20px;
+    height:20px;
+    cursor:pointer;
+}
+
+.btn-resize-right {
+    top:22px;
+    right: 0;
+}
+
+.btn-resize-left {
+    top:22px;
+    right: 43px;
+}
+
+.btn-resize-up {
+    top:0;
+    right: 22px;
+}
+
+.btn-resize-down {
+    top:43px;
+    right: 22px;
+}

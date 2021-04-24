@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9c2be796e83f419eae76a64df6e9fdd9" Name="Diagram1" ZoomLevel="100" >
+        <EntityTypeShape EntityType="AppDataModel.Gadget" Width="1.625" PointX="2.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AppDataModel.GadgetInstance" Width="1.625" PointX="5" PointY="0.5" />
+        <EntityTypeShape EntityType="AppDataModel.GadgetInstanceSetting" Width="1.875" PointX="4.875" PointY="3.625" />
+        <AssociationConnector Association="AppDataModel.GadgetGadgetInstance" ManuallyRouted="true" >
+          <ConnectorPoint PointX="4.375" PointY="1.7785953776041665" />
+          <ConnectorPoint PointX="5" PointY="1.7785953776041665" />
+        </AssociationConnector>
+        <AssociationConnector Association="AppDataModel.GadgetInstanceGadgetInstanceUserSetting" />
+        <EntityTypeShape EntityType="AppDataModel.UserSetting" Width="1.625" PointX="7.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AppDataModel.UsernameBlackList" Width="2" PointX="7.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AppDataModel.GadgetSetting" Width="1.5" PointX="0.625" PointY="1.25" />
+        <AssociationConnector Association="AppDataModel.GadgetGadgetSetting" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

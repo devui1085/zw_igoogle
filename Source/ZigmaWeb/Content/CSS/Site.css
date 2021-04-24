@@ -1,0 +1,49 @@
+﻿html, body {
+    width: 100%;
+    height: 100%;
+    line-height: 1em;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    direction: rtl;
+    overflow: hidden;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 1em;
+    font-family: tahoma;
+}
+
+#all {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+#header {
+    height: 40px;
+    background-color: #2a49fc;
+    display: table-row;
+}
+
+#main {
+    display: table-row;
+}
+
+
+#footer {
+    height: 40px;
+    background-color: red;
+    display: table-row;
+}
+
+#ph-container {
+    display: table-cell;
+    padding: 0 10px 0 10px;
+    vertical-align: middle;
+}
+
+#ph {
+    position: relative;
+    width: 100%;
+}

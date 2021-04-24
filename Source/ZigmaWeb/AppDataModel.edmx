@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AppDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AppDataModelStoreContainer">
+    <EntitySet Name="Gadgets" EntityType="AppDataModel.Store.Gadgets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GadgetInstances" EntityType="AppDataModel.Store.GadgetInstances" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GadgetInstanceSettings" EntityType="AppDataModel.Store.GadgetInstanceSettings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserSettings" EntityType="AppDataModel.Store.UserSettings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UsernameBlackLists" EntityType="AppDataModel.Store.UsernameBlackLists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GadgetSettings" EntityType="AppDataModel.Store.GadgetSettings" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="GadgetGadgetInstance" Association="AppDataModel.Store.GadgetGadgetInstance">
+      <End Role="Gadget" EntitySet="Gadgets" />
+      <End Role="GadgetInstance" EntitySet="GadgetInstances" />
+    </AssociationSet>
+    <AssociationSet Name="GadgetInstanceGadgetInstanceUserSetting" Association="AppDataModel.Store.GadgetInstanceGadgetInstanceUserSetting">
+      <End Role="GadgetInstance" EntitySet="GadgetInstances" />
+      <End Role="GadgetInstanceUserSetting" EntitySet="GadgetInstanceSettings" />
+    </AssociationSet>
+    <AssociationSet Name="GadgetGadgetSetting" Association="AppDataModel.Store.GadgetGadgetSetting">
+      <End Role="Gadget" EntitySet="Gadgets" />
+      <End Role="GadgetSetting" EntitySet="GadgetSettings" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Gadgets">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GadgetType" Type="tinyint" Nullable="false" />
+    <Property Name="SystemName" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="PublicName" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Version" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="FolderName" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="CreateDate" Type="datetime" Nullable="true" />
+    <Property Name="LastUpdate" Type="datetime" Nullable="true" />
+    <Property Name="HomePageUrl" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+    <Property Name="Data" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="GadgetInstances">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Row" Type="tinyint" Nullable="false" />
+    <Property Name="Column" Type="tinyint" Nullable="false" />
+    <Property Name="RowSpan" Type="tinyint" Nullable="false" />
+    <Property Name="ColumnSpan" Type="tinyint" Nullable="false" />
+    <Property Name="Gadget_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GadgetInstanceSettings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Key" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Value" Type="nvarchar" Nullable="false" MaxLength="4000" />
+    <Property Name="Public" Type="bit" Nullable="false" />
+    <Property Name="GadgetInstance_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserSettings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Key" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Value" Type="nvarchar" Nullable="false" MaxLength="4000" />
+    <Property Name="Public" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsernameBlackLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="GadgetSettings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Key" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Value" Type="nvarchar" Nullable="false" MaxLength="4000" />
+    <Property Name="Public" Type="bit" Nullable="false" />
+    <Property Name="Gadget_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="GadgetGadgetInstance">
+    <End Role="Gadget" Type="AppDataModel.Store.Gadgets" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GadgetInstance" Type="AppDataModel.Store.GadgetInstances" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gadget">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GadgetInstance">
+        <PropertyRef Name="Gadget_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GadgetInstanceGadgetInstanceUserSetting">
+    <End Role="GadgetInstance" Type="AppDataModel.Store.GadgetInstances" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GadgetInstanceUserSetting" Type="AppDataModel.Store.GadgetInstanceSettings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GadgetInstance">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GadgetInstanceUserSetting">
+        <PropertyRef Name="GadgetInstance_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GadgetGadgetSetting">
+    <End Role="Gadget" Type="AppDataModel.Store.Gadgets" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GadgetSetting" Type="AppDataModel.Store.GadgetSettings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gadget">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GadgetSetting">
+        <PropertyRef Name="Gadget_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="AppDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="AppDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Gadgets" EntityType="AppDataModel.Gadget" />
+          <EntitySet Name="GadgetInstances" EntityType="AppDataModel.GadgetInstance" />
+          <EntitySet Name="GadgetInstanceSettings" EntityType="AppDataModel.GadgetInstanceSetting" />
+          <AssociationSet Name="GadgetGadgetInstance" Association="AppDataModel.GadgetGadgetInstance">
+            <End Role="Gadget" EntitySet="Gadgets" />
+            <End Role="GadgetInstance" EntitySet="GadgetInstances" />
+          </AssociationSet>
+          <AssociationSet Name="GadgetInstanceGadgetInstanceUserSetting" Association="AppDataModel.GadgetInstanceGadgetInstanceUserSetting">
+            <End Role="GadgetInstance" EntitySet="GadgetInstances" />
+            <End Role="GadgetInstanceUserSetting" EntitySet="GadgetInstanceSettings" />
+          </AssociationSet>
+          <EntitySet Name="UserSettings" EntityType="AppDataModel.UserSetting" />
+          <EntitySet Name="UsernameBlackLists" EntityType="AppDataModel.UsernameBlackList" />
+          <EntitySet Name="GadgetSettings" EntityType="AppDataModel.GadgetSetting" />
+          <AssociationSet Name="GadgetGadgetSetting" Association="AppDataModel.GadgetGadgetSetting">
+            <End Role="Gadget" EntitySet="Gadgets" />
+            <End Role="GadgetSetting" EntitySet="GadgetSettings" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Gadget">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GadgetType" Type="AppDataModel.GadgetType" Nullable="false" />
+          <Property Name="SystemName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PublicName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Version" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="FolderName" Type="String" MaxLength="256" Nullable="false" Unicode="true" FixedLength="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="LastUpdate" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="HomePageUrl" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="true" />
+          <NavigationProperty Name="Instances" Relationship="AppDataModel.GadgetGadgetInstance" FromRole="Gadget" ToRole="GadgetInstance" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false"  />
+          <Property Name="Data" Type="String" MaxLength="Max" Unicode="true" Nullable="true" />
+          <NavigationProperty Name="Settings" Relationship="AppDataModel.GadgetGadgetSetting" FromRole="Gadget" ToRole="GadgetSetting" />
+        </EntityType>
+        <EntityType Name="GadgetInstance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Gadget" Relationship="AppDataModel.GadgetGadgetInstance" FromRole="GadgetInstance" ToRole="Gadget" />
+          <NavigationProperty Name="Settings" Relationship="AppDataModel.GadgetInstanceGadgetInstanceUserSetting" FromRole="GadgetInstance" ToRole="GadgetInstanceUserSetting" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Row" Type="Byte" Nullable="false" />
+          <Property Name="Column" Type="Byte" Nullable="false" />
+          <Property Name="RowSpan" Type="Byte" Nullable="false" />
+          <Property Name="ColumnSpan" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GadgetInstanceSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="GadgetInstance" Relationship="AppDataModel.GadgetInstanceGadgetInstanceUserSetting" FromRole="GadgetInstanceUserSetting" ToRole="GadgetInstance" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Public" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="GadgetGadgetInstance">
+          <End Type="AppDataModel.Gadget" Role="Gadget" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AppDataModel.GadgetInstance" Role="GadgetInstance" Multiplicity="*" />
+        </Association>
+        <Association Name="GadgetInstanceGadgetInstanceUserSetting">
+          <End Type="AppDataModel.GadgetInstance" Role="GadgetInstance" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AppDataModel.GadgetInstanceSetting" Role="GadgetInstanceUserSetting" Multiplicity="*" />
+        </Association>
+        <EntityType Name="UserSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Public" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EnumType Name="GadgetType" UnderlyingType="Byte">
+          <Member Name="System" />
+          <Member Name="User" />
+          <Member Name="DemoOnly" />
+        </EnumType>
+        <EntityType Name="UsernameBlackList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" Unicode="true" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="GadgetSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Gadget" Relationship="AppDataModel.GadgetGadgetSetting" FromRole="GadgetSetting" ToRole="Gadget" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Public" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="GadgetGadgetSetting">
+          <End Type="AppDataModel.Gadget" Role="Gadget" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AppDataModel.GadgetSetting" Role="GadgetSetting" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AppDataModelStoreContainer" CdmEntityContainer="AppDataModelContainer">
+    <EntitySetMapping Name="Gadgets">
+      <EntityTypeMapping TypeName="IsTypeOf(AppDataModel.Gadget)">
+        <MappingFragment StoreEntitySet="Gadgets">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GadgetType" ColumnName="GadgetType" />
+          <ScalarProperty Name="SystemName" ColumnName="SystemName" />
+          <ScalarProperty Name="PublicName" ColumnName="PublicName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+          <ScalarProperty Name="HomePageUrl" ColumnName="HomePageUrl" />
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GadgetInstances">
+      <EntityTypeMapping TypeName="IsTypeOf(AppDataModel.GadgetInstance)">
+        <MappingFragment StoreEntitySet="GadgetInstances">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Row" ColumnName="Row" />
+          <ScalarProperty Name="Column" ColumnName="Column" />
+          <ScalarProperty Name="RowSpan" ColumnName="RowSpan" />
+          <ScalarProperty Name="ColumnSpan" ColumnName="ColumnSpan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GadgetInstanceSettings">
+      <EntityTypeMapping TypeName="IsTypeOf(AppDataModel.GadgetInstanceSetting)">
+        <MappingFragment StoreEntitySet="GadgetInstanceSettings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Public" ColumnName="Public" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserSettings">
+      <EntityTypeMapping TypeName="IsTypeOf(AppDataModel.UserSetting)">
+        <MappingFragment StoreEntitySet="UserSettings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Public" ColumnName="Public" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsernameBlackLists">
+      <EntityTypeMapping TypeName="IsTypeOf(AppDataModel.UsernameBlackList)">
+        <MappingFragment StoreEntitySet="UsernameBlackLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GadgetSettings">
+      <EntityTypeMapping TypeName="IsTypeOf(AppDataModel.GadgetSetting)">
+        <MappingFragment StoreEntitySet="GadgetSettings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Public" ColumnName="Public" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="GadgetGadgetInstance" TypeName="AppDataModel.GadgetGadgetInstance" StoreEntitySet="GadgetInstances">
+      <EndProperty Name="Gadget">
+        <ScalarProperty Name="Id" ColumnName="Gadget_Id" />
+      </EndProperty>
+      <EndProperty Name="GadgetInstance">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GadgetInstanceGadgetInstanceUserSetting" TypeName="AppDataModel.GadgetInstanceGadgetInstanceUserSetting" StoreEntitySet="GadgetInstanceSettings">
+      <EndProperty Name="GadgetInstance">
+        <ScalarProperty Name="Id" ColumnName="GadgetInstance_Id" />
+      </EndProperty>
+      <EndProperty Name="GadgetInstanceUserSetting">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GadgetGadgetSetting" TypeName="AppDataModel.GadgetGadgetSetting" StoreEntitySet="GadgetSettings">
+      <EndProperty Name="Gadget">
+        <ScalarProperty Name="Id" ColumnName="Gadget_Id" />
+      </EndProperty>
+      <EndProperty Name="GadgetSetting">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
